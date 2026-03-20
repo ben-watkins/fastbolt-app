@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tgs-v4';
+const CACHE_NAME = 'tgs-v5';
 const ASSETS = [
   './index.html',
   './manifest.json',

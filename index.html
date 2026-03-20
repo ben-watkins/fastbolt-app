@@ -199,9 +199,27 @@ tr:hover { background: #fdecea; }
   .page { display: block !important; max-width: 100%; padding: 0; }
   .card { box-shadow: none; border: 1px solid #ddd; }
 }
+
+/* SPLASH SCREEN */
+.splash { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: #ffffff; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity .4s; }
+.splash.hide { opacity: 0; pointer-events: none; }
+.splash img { width: 180px; height: 180px; margin-bottom: 16px; }
+.splash .splash-text { color: var(--primary); font-family: Georgia, 'Times New Roman', serif; font-size: 24px; font-weight: 700; }
+.splash .splash-sub { color: var(--text-muted); font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 8px; }
+.splash .splash-loader { width: 40px; height: 4px; background: var(--border); border-radius: 2px; margin-top: 24px; overflow: hidden; }
+.splash .splash-loader::after { content: ''; display: block; width: 50%; height: 100%; background: var(--primary); border-radius: 2px; animation: splashLoad 1s ease-in-out infinite; }
+@keyframes splashLoad { 0% { transform: translateX(-100%); } 100% { transform: translateX(200%); } }
 </style>
 </head>
 <body>
+
+<!-- SPLASH / LOADING SCREEN -->
+<div class="splash" id="splash-screen">
+  <img src="icons/icon-512.png" alt="Texas General Supply">
+  <div class="splash-text">Texas General Supply</div>
+  <div class="splash-sub">Fleet Maintenance & Industrial Supplies</div>
+  <div class="splash-loader"></div>
+</div>
 
 <div class="topbar">
   <div class="topbar-brand">
@@ -644,6 +662,12 @@ function init() {
   renderCatalog();
   renderHistory();
   updateOrderDisplay();
+
+  // Dismiss splash screen
+  setTimeout(() => {
+    const splash = document.getElementById('splash-screen');
+    if (splash) { splash.classList.add('hide'); setTimeout(() => splash.remove(), 500); }
+  }, 1200);
 }
 
 // ===================== NAVIGATION =====================
